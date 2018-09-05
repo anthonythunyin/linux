@@ -36,7 +36,8 @@ do
 		   export INSTANCE=$INSTANCE
                    echo -e "You chose ($REPLY) $INSTANCE\t\c";
                    echo ""
-                   PUBLICDNS=($(aws ec2 describe-instances --query 'Reservations[*].Instances[*].[PublicDnsName]' --filters "Name=instance-state-name,Values=running" "Name=instance-id, Values=$INSTANCE" --output text))                              KEYNAME=($(aws ec2 describe-instances --query 'Reservations[*].Instances[*].[KeyName]' --filters "Name=instance-state-name,Values=running" "Name=instance-id, Values=$INSTANCE" --output text))
+                   PUBLICDNS=($(aws ec2 describe-instances --query 'Reservations[*].Instances[*].[PublicDnsName]' --filters "Name=instance-state-name,Values=running" "Name=instance-id, Values=$INSTANCE" --output text))                              
+		   KEYNAME=($(aws ec2 describe-instances --query 'Reservations[*].Instances[*].[KeyName]' --filters "Name=instance-state-name,Values=running" "Name=instance-id, Values=$INSTANCE" --output text))
                    exec ssh -i "$KEYNAME" ec2-user@$PUBLICDNS
 		   ;;
 	esac
